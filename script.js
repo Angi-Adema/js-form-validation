@@ -6,10 +6,12 @@ const username = document.getElementById("username")
 const password = document.getElementById("password")
 const passConf = document.getElementById("password-confirmation")
 const terms = document.getElementById("terms")
+const errors = document.querySelector(".errors")
+const errorsList = document.querySelector(".errors-list")
 
 // TODO: Create an event listener for when the form is submitted and do the following inside of it.
 form.addEventListener("submit", (e) => {
-  e.preventDefault()
+  //   e.preventDefault()  Added below.
 
   //    TODO: Create an array to store all error messages and clear any old error messages
   const errorPrompts = []
@@ -39,26 +41,41 @@ form.addEventListener("submit", (e) => {
     errorPrompts.push("You must agree to the terms!")
   }
   //   console.log(errorPrompts)
-})
 
-//    TODO: If there are any errors then prevent the form from submitting and show the error messages
-if (errorPrompts.length > 0) {
-  e.preventDefault()
-  showErrors(errorPrompts)
-}
+  //    TODO: If there are any errors then prevent the form from submitting and show the error messages
+  if (errorPrompts.length > 0) {
+    showErrors(errorPrompts)
+    e.preventDefault()
+  }
+})
 
 // TODO: Define this function
 function clearErrors() {
   // Loop through all the children of the error-list element and remove them
   // IMPORTANT: This cannot be done with a forEach loop or a normal for loop since as you remove children it will modify the list you are looping over which will not work
   // I recommend using a while loop to accomplish this task
+
+  //   while (errorsList.children[0] != null) {
+  //     errorsList.removeChild(errorsList.children[0])
+  //   }
+
+  //OR
+  errorsList.innerHTML = ""
+
   // This is the trickiest part of this exercise so if you get stuck and are unable to progress you can also set the innerHTML property of the error-list to an empty string and that will also clear the children. I recommend trying to accomplish this with a while loop, though, for practice.
   // Also, make sure you remove the show class to the errors container
+  errors.classList.remove("show")
 }
 
 // TODO: Define this function
-function showErrors(errorMessages) {
+function showErrors(errorPrompts) {
   // Add each error to the error-list element
   // Make sure to use an li as the element for each error
   // Also, make sure you add the show class to the errors container
+  errorPrompts.forEach((error) => {
+    const listItem = document.createElement("li")
+    listItem.innerText = error
+    errorsList.appendChild(listItem)
+  })
+  errors.classList.add("show")
 }
